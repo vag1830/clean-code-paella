@@ -9,5 +9,7 @@ namespace Paella.Application.Persistence
         ICollection<Product> GetAll();
 
         Product GetById(Guid id);
+
+        void Create(Product product);
     }
 }

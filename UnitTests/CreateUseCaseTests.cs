@@ -2,8 +2,10 @@ using System;
 using FluentAssertions;
 using Moq;
 using Paella.Application.Persistence;
-using Paella.Application.UseCases.GetById;
+using Paella.Application.UseCases.Create;
 using Paella.Domain.Entities;
+using Paella.Domain.Exceptions;
+using Paella.Infrastructure;
 using Xunit;
 
 namespace UnitTests
@@ -11,54 +13,39 @@ namespace UnitTests
     public class CreateUseCaseTests
     {
         [Fact]
-        public void ProductsAvailable_ShouldReturnAListOfProducts()
+        public void ProductAlreadyExists_ShouldThrowException()
         {
             // Arrange
             var repository = GetProductRepository();
-            var sut = new GetByIdUseCase(repository);
+            var sut = new CreateUseCase(repository);
 
-            var id = Guid.NewGuid();
+            var product = new Product("Name", "Description");
 
             // Act
-            var actual = sut.Execute(id);
+            Action action = () => sut.Execute(product);
 
             // Assert
-            actual
+            action
                 .Should()
-                .NotBeNull();
-
-            actual.Name
-                .Should()
-                .Be("Name");
+                .Throw<ProductAlreadyExistsException>();
         }
 
-        //[Fact]
-        //public void TheProductDoesNotExist_ShouldReturNull()
-        //{
-        //    // Arrange
-        //    var repository = GetEmptyProductRepository();
-        //    var sut = new GetByIdUseCase(repository);
-
-        //    var id = Guid.NewGuid();
-
-        //    // Act
-        //    var actual = sut.Execute(id);
-
-        //    // Assert
-        //    actual
-        //        .Should()
-        //        .BeNull();
-        //}
-
-        private IProductRepository GetEmptyProductRepository()
+        [Fact]
+        public void NewProduct_ShouldAddTheProduct()
         {
-            var repository = new Mock<IProductRepository>();
+            // Arrange
+            var repository = new ProductRepository();
+            var sut = new CreateUseCase(repository);
 
-            repository
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(null as Product);
+            var product = new Product("Name", "Description");
 
-            return repository.Object;
+            // Act
+            Action action = () => sut.Execute(product);
+
+            // Assert
+            action
+                .Should()
+                .NotThrow();
         }
 
         private IProductRepository GetProductRepository()
@@ -67,8 +54,8 @@ namespace UnitTests
             var product = new Product("Name", "Description");
 
             repository
-                .Setup(r => r.GetById(It.IsAny<Guid>()))
-                .Returns(product);
+                .Setup(r => r.Create(It.IsAny<Product>()))
+                .Throws(new ProductAlreadyExistsException());
 
             return repository.Object;
         }
