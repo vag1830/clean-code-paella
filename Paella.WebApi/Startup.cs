@@ -4,7 +4,10 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Paella.Application.Persistence;
+using Paella.Application.UseCases.Create;
 using Paella.Application.UseCases.GetAll;
+using Paella.Application.UseCases.GetById;
+using Paella.Application.UseCases.Update;
 using Paella.Infrastructure;
 
 namespace Paella.WebApi
@@ -23,7 +26,10 @@ namespace Paella.WebApi
         {
             services.AddControllers();
             services.AddTransient<IGetAllUseCase, GetAllUseCase>();
-            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IGetByIdUseCase, GetByIdUseCase>();
+            services.AddTransient<ICreateUseCase, CreateUseCase>();
+            services.AddTransient<IUpdateUseCase, UpdateUseCase>();
+            services.AddSingleton<IProductRepository, ProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

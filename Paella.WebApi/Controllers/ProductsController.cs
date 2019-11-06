@@ -1,7 +1,13 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
+using Paella.Application.UseCases.Create;
 using Paella.Application.UseCases.GetAll;
 using Paella.Application.UseCases.GetById;
+using Paella.Application.UseCases.Update;
+using Paella.Domain.Entities;
+using Paella.Domain.Exceptions;
+using Paella.WebApi.UseCases.Create;
+using Paella.WebApi.UseCases.Update;
 
 namespace Paella.WebApi.Controllers
 {
@@ -11,17 +17,23 @@ namespace Paella.WebApi.Controllers
     {
         private readonly IGetAllUseCase _getAllUseCase;
         private readonly IGetByIdUseCase _getByIdUseCase;
+        private readonly ICreateUseCase _createUseCase;
+        private readonly IUpdateUseCase _updateUseCase;
 
         public ProductsController(
             IGetAllUseCase getAllUseCase,
-            IGetByIdUseCase getByIdUseCase)
+            IGetByIdUseCase getByIdUseCase,
+            ICreateUseCase createUseCase,
+            IUpdateUseCase updateUseCase)
         {
             _getAllUseCase = getAllUseCase;
             _getByIdUseCase = getByIdUseCase;
+            _createUseCase = createUseCase;
+            _updateUseCase = updateUseCase;
         }
 
         [HttpGet]
-        public IActionResult GetAllProducts()
+        public IActionResult GetAll()
         {
             var result = _getAllUseCase.Execute();
 
@@ -30,7 +42,7 @@ namespace Paella.WebApi.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult GetProductById(Guid id)
+        public IActionResult GetById(Guid id)
         {
             var result = _getByIdUseCase.Execute(id);
 
@@ -40,6 +52,41 @@ namespace Paella.WebApi.Controllers
             }
 
             return Ok(result);
+        }
+
+        [HttpPost]
+        public IActionResult Create(CreateProductRequest request)
+        {
+            try
+            {
+                var product = new Product(request.Name, request.Description);
+
+                _createUseCase.Execute(product);
+            }
+            catch (ProductAlreadyExistsException)
+            {
+                return Conflict();
+            }
+
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult Update(Guid id, UpdateProductRequest request)
+        {
+            try
+            {
+                var product = new Product(id, request.Name, request.Description);
+
+                _updateUseCase.Execute(id, product);
+            }
+            catch (ProductNotFoundException)
+            {
+                return NotFound();
+            }
+
+            return Ok();
         }
     }
 }
