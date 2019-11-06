@@ -34,7 +34,7 @@ namespace UnitTests
         public void NewProduct_ShouldAddTheProduct()
         {
             // Arrange
-            var repository = new ProductRepository();
+            var repository = new InMemoryProductRepository();
             var sut = new CreateUseCase(repository);
 
             var product = new Product("Name", "Description");

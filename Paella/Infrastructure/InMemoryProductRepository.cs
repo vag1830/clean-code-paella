@@ -6,11 +6,11 @@ using Paella.Domain.Entities;
 
 namespace Paella.Infrastructure
 {
-    public class ProductRepository : IProductRepository
+    public class InMemoryProductRepository : IProductRepository
     {
         private readonly IDictionary<Guid, Product> Products = new Dictionary<Guid, Product>();
 
-        public ProductRepository()
+        public InMemoryProductRepository()
         {
             var product = new Product("Tapas", "Delicious");
 

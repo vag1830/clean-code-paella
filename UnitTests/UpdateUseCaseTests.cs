@@ -60,7 +60,7 @@ namespace UnitTests
 
         private IProductRepository GetEmptyProductRepository()
         {
-            var repository = new ProductRepository();
+            var repository = new InMemoryProductRepository();
 
             return repository;
         }
