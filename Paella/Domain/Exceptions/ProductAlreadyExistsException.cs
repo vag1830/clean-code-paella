@@ -4,6 +4,7 @@
     {
         public ProductAlreadyExistsException() { }
 
-        public ProductAlreadyExistsException(string message) : base(message) { }
+        public ProductAlreadyExistsException(string message)
+            : base(message) { }
     }
 }

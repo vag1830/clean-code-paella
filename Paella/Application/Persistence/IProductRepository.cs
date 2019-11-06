@@ -11,5 +11,7 @@ namespace Paella.Application.Persistence
         Product GetById(Guid id);
 
         void Create(Product product);
+
+        void Update(Guid id, Product product);
     }
 }

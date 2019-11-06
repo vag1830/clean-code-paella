@@ -17,5 +17,12 @@ namespace Paella.Domain.Entities
             Name = name;
             Description = description;
         }
+
+        public Product(Guid id, string name, string description)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+        }
     }
 }
