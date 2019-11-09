@@ -1,0 +1,73 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Paella.Application.Persistence;
+using Paella.Domain.Entities;
+using Paella.Infrastructure.Entities;
+
+namespace Paella.Infrastructure
+{
+    public class ProductRepository : IProductRepository
+    {
+        private readonly ProductDbContext _context;
+
+        public ProductRepository(ProductDbContext context)
+        {
+            _context = context;
+            _context.Database.EnsureCreated();
+        }
+
+        public ICollection<Product> GetAll()
+        {
+            var result = _context.Products
+                .Select(ToDomainEntity)
+                .ToList();
+
+            return result;
+        }
+
+        public Product GetById(Guid id)
+        {
+            var result = _context.Products
+                .FirstOrDefault(product => product.Id == id);
+
+            return result == null
+                ? null
+                : ToDomainEntity(result);
+        }
+
+        public void Create(Product product)
+        {
+            var dao = ToDao(product);
+
+            _context.Products
+                .Add(dao);
+
+            _context.SaveChanges();
+        }
+
+        public void Update(Guid id, Product product)
+        {
+            var dao = ToDao(product);
+
+            _context.Update(dao);
+
+            _context.SaveChanges();
+        }
+
+        private Product ToDomainEntity(ProductDao dao)
+        {
+            return new Product(dao.Id, dao.Name, dao.Description);
+        }
+
+        private ProductDao ToDao(Product product)
+        {
+            return new ProductDao
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description
+            };
+        }
+    }
+}

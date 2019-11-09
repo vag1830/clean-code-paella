@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -14,6 +15,8 @@ namespace Paella.WebApi
 {
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,11 +28,25 @@ namespace Paella.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            // TODO: move to an extension
             services.AddTransient<IGetAllUseCase, GetAllUseCase>();
             services.AddTransient<IGetByIdUseCase, GetByIdUseCase>();
             services.AddTransient<ICreateUseCase, CreateUseCase>();
             services.AddTransient<IUpdateUseCase, UpdateUseCase>();
-            services.AddSingleton<IProductRepository, InMemoryProductRepository>();
+
+            // TODO: move to an extension
+            var connectionString = Configuration.GetConnectionString("SQLServer");
+            services.AddDbContext<ProductDbContext>(builder =>
+            {
+                builder.UseSqlServer(connectionString);
+                builder.EnableSensitiveDataLogging();
+                builder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+
+            });
+
+            //services.AddSingleton<IProductRepository, InMemoryProductRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
