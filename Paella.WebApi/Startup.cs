@@ -10,6 +10,7 @@ using Paella.Application.UseCases.GetAll;
 using Paella.Application.UseCases.GetById;
 using Paella.Application.UseCases.Update;
 using Paella.Infrastructure;
+using Paella.WebApi.Extentions;
 
 namespace Paella.WebApi
 {
@@ -42,9 +43,10 @@ namespace Paella.WebApi
             {
                 builder.UseSqlServer(connectionString);
             });
-
             //services.AddSingleton<IProductRepository, InMemoryProductRepository>();
             services.AddTransient<IProductRepository, ProductEFCoreRepository>();
+
+            services.AddSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +58,8 @@ namespace Paella.WebApi
             }
 
             app.UseHttpsRedirection();
+
+            app.UseCustomSwagger();
 
             app.UseRouting();
 
