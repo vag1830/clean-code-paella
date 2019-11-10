@@ -1,9 +1,10 @@
-﻿using Paella.Domain.Entities;
+﻿using System;
+using Paella.Application.UseCases.Create.Parameters;
 
 namespace Paella.Application.UseCases.Create
 {
     public interface ICreateUseCase
     {
-        void Execute(Product product);
+        Guid Execute(CreateInput input);
     }
 }

@@ -1,6 +1,7 @@
-﻿using Paella.Application.Persistence;
+﻿using System;
+using Paella.Application.Persistence;
+using Paella.Application.UseCases.Create.Parameters;
 using Paella.Domain.Entities;
-using Paella.Domain.Exceptions;
 
 namespace Paella.Application.UseCases.Create
 {
@@ -13,18 +14,23 @@ namespace Paella.Application.UseCases.Create
             _repository = repository;
         }
 
-        public void Execute(Product product)
+        public Guid Execute(CreateInput input)
         {
-            var exists = _repository.GetById(product.Id) == null
-                ? false
-                : true;
+            var product = _repository.GetById(input.Id);
 
-            if (exists)
+            if (product != null)
             {
-                throw new ProductAlreadyExistsException();
+                return product.Id;
             }
 
+            product = new Product(
+                input.Id,
+                input.Name,
+                input.Description);
+
             _repository.Create(product);
+
+            return product.Id;
         }
     }
 }

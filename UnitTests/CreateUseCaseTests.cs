@@ -3,6 +3,7 @@ using FluentAssertions;
 using Moq;
 using Paella.Application.Persistence;
 using Paella.Application.UseCases.Create;
+using Paella.Application.UseCases.Create.Parameters;
 using Paella.Domain.Entities;
 using Paella.Domain.Exceptions;
 using Paella.Infrastructure;
@@ -19,10 +20,10 @@ namespace UnitTests
             var repository = GetProductRepository();
             var sut = new CreateUseCase(repository);
 
-            var product = new Product("Name", "Description");
+            var input = new CreateInput { Name = "Name", Description = "Description" };
 
             // Act
-            Action action = () => sut.Execute(product);
+            Action action = () => sut.Execute(input);
 
             // Assert
             action
@@ -37,10 +38,10 @@ namespace UnitTests
             var repository = new InMemoryProductRepository();
             var sut = new CreateUseCase(repository);
 
-            var product = new Product("Name", "Description");
+            var input = new CreateInput { Name = "Name", Description = "Description" };
 
             // Act
-            Action action = () => sut.Execute(product);
+            Action action = () => sut.Execute(input);
 
             // Assert
             action

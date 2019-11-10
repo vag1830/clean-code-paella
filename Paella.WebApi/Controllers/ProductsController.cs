@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Paella.Application.UseCases.Create;
+using Paella.Application.UseCases.Create.Parameters;
 using Paella.Application.UseCases.GetAll;
 using Paella.Application.UseCases.GetById;
 using Paella.Application.UseCases.Update;
@@ -57,18 +58,16 @@ namespace Paella.WebApi.Controllers
         [HttpPost]
         public IActionResult Create(CreateProductRequest request)
         {
-            try
+            var input = new CreateInput
             {
-                var product = new Product(request.Name, request.Description);
+                Id = request.Id,
+                Name = request.Name,
+                Description = request.Description
+            };
 
-                _createUseCase.Execute(product);
-            }
-            catch (ProductAlreadyExistsException)
-            {
-                return Conflict();
-            }
+            var productId = _createUseCase.Execute(input);
 
-            return Ok();
+            return Ok(productId);
         }
 
         [HttpPut]

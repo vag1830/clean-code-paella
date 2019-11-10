@@ -28,6 +28,7 @@ namespace Paella.WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddMemoryCache();
 
             // TODO: move to an extension
             services.AddTransient<IGetAllUseCase, GetAllUseCase>();
@@ -40,9 +41,8 @@ namespace Paella.WebApi
             services.AddDbContext<ProductDbContext>(builder =>
             {
                 builder.UseSqlServer(connectionString);
-                builder.EnableSensitiveDataLogging();
-                builder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
-
+                // builder.EnableSensitiveDataLogging();
+                // builder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
 
             //services.AddSingleton<IProductRepository, InMemoryProductRepository>();

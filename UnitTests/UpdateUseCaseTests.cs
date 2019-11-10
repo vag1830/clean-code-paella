@@ -2,6 +2,7 @@ using System;
 using FluentAssertions;
 using Paella.Application.Persistence;
 using Paella.Application.UseCases.Create;
+using Paella.Application.UseCases.Create.Parameters;
 using Paella.Application.UseCases.GetById;
 using Paella.Application.UseCases.Update;
 using Paella.Domain.Entities;
@@ -43,9 +44,10 @@ namespace UnitTests
             var getByIdUseCase = new GetByIdUseCase(repository);
 
             var id = Guid.NewGuid();
+            var createInput = new CreateInput { Id = id, Name = "Name", Description = "Description" };
             var product = new Product(id, "Name", "Description");
 
-            createUseCase.Execute(product);
+            createUseCase.Execute(createInput);
 
             // Act
             sut.Execute(id, product);

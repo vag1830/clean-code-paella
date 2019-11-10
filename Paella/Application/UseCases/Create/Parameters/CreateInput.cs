@@ -1,14 +1,11 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 
-namespace Paella.WebApi.UseCases.Create
+namespace Paella.Application.UseCases.Create.Parameters
 {
-    public class CreateProductRequest
+    public class CreateInput
     {
-        [Required]
         public Guid Id { get; set; }
 
-        [Required]
         public string Name { get; set; }
 
         public string Description { get; set; }
