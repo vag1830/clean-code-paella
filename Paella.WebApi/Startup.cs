@@ -41,12 +41,10 @@ namespace Paella.WebApi
             services.AddDbContext<ProductDbContext>(builder =>
             {
                 builder.UseSqlServer(connectionString);
-                // builder.EnableSensitiveDataLogging();
-                // builder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
             });
 
             //services.AddSingleton<IProductRepository, InMemoryProductRepository>();
-            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IProductRepository, ProductEFCoreRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

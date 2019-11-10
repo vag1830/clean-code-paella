@@ -8,11 +8,11 @@ using Paella.Infrastructure.Entities;
 
 namespace Paella.Infrastructure
 {
-    public class ProductRepository : IProductRepository
+    public class ProductEFCoreRepository : IProductRepository
     {
         private readonly ProductDbContext _context;
 
-        public ProductRepository(ProductDbContext context)
+        public ProductEFCoreRepository(ProductDbContext context)
         {
             _context = context;
             _context.Database.EnsureCreated();
