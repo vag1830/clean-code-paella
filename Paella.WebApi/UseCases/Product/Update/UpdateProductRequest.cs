@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Paella.WebApi.UseCases.Update
+namespace Paella.WebApi.UseCases.Product.Update
 {
     public class UpdateProductRequest
     {

@@ -10,9 +10,9 @@ namespace Paella.Infrastructure
 {
     public class ProductEFCoreRepository : IProductRepository
     {
-        private readonly ProductDbContext _context;
+        private readonly PaellaDbContext _context;
 
-        public ProductEFCoreRepository(ProductDbContext context)
+        public ProductEFCoreRepository(PaellaDbContext context)
         {
             _context = context;
             _context.Database.EnsureCreated();

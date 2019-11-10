@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Paella.Application.UseCases.Create;
 using Paella.Application.UseCases.Create.Parameters;
@@ -7,10 +8,10 @@ using Paella.Application.UseCases.GetById;
 using Paella.Application.UseCases.Update;
 using Paella.Application.UseCases.Update.Parameters;
 using Paella.Domain.Exceptions;
-using Paella.WebApi.UseCases.Create;
-using Paella.WebApi.UseCases.Update;
+using Paella.WebApi.UseCases.Product.Create;
+using Paella.WebApi.UseCases.Product.Update;
 
-namespace Paella.WebApi.Controllers
+namespace Paella.WebApi.UseCases.Product
 {
     [ApiController]
     [Route("api/[controller]")]
@@ -56,6 +57,7 @@ namespace Paella.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult Create(CreateProductRequest request)
         {
             var input = new CreateInput
@@ -72,6 +74,7 @@ namespace Paella.WebApi.Controllers
 
         [HttpPut]
         [Route("{id}")]
+        [Authorize]
         public IActionResult Update(Guid id, UpdateProductRequest request)
         {
             try

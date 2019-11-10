@@ -1,23 +1,18 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Paella.Application.Persistence;
-using Paella.Application.UseCases.Create;
-using Paella.Application.UseCases.GetAll;
-using Paella.Application.UseCases.GetById;
-using Paella.Application.UseCases.Update;
-using Paella.Infrastructure;
+using Paella.Application.Services;
+using Paella.Infrastructure.Seeds;
+using Paella.Infrastructure.Services;
 using Paella.WebApi.Extentions;
+using WebApi.Services;
 
 namespace Paella.WebApi
 {
     public class Startup
     {
-        private readonly IConfiguration _configuration;
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -31,26 +26,22 @@ namespace Paella.WebApi
             services.AddControllers();
             services.AddMemoryCache();
 
-            // TODO: move to an extension
-            services.AddTransient<IGetAllUseCase, GetAllUseCase>();
-            services.AddTransient<IGetByIdUseCase, GetByIdUseCase>();
-            services.AddTransient<ICreateUseCase, CreateUseCase>();
-            services.AddTransient<IUpdateUseCase, UpdateUseCase>();
+            services.AddUseCases();
+            services.AddPersistence(Configuration);
+            services.AddIdentityAndAuthentication();
 
-            // TODO: move to an extension
-            var connectionString = Configuration.GetConnectionString("SQLServer");
-            services.AddDbContext<ProductDbContext>(builder =>
-            {
-                builder.UseSqlServer(connectionString);
-            });
-            //services.AddSingleton<IProductRepository, InMemoryProductRepository>();
-            services.AddTransient<IProductRepository, ProductEFCoreRepository>();
+            services.AddScoped<IUserService, UserService>();
+            services.AddScoped<TokenService, TokenService>();
 
+            services.AddScoped<PaellaUserSeeder, PaellaUserSeeder>();
             services.AddSwagger();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(
+            IApplicationBuilder app,
+            IWebHostEnvironment env,
+            PaellaUserSeeder userSeeder)
         {
             if (env.IsDevelopment())
             {
@@ -69,6 +60,8 @@ namespace Paella.WebApi
             {
                 endpoints.MapControllers();
             });
+
+            app.SeedUsers(userSeeder);
         }
     }
 }
