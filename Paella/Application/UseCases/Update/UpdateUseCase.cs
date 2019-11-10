@@ -1,7 +1,7 @@
 ﻿using System;
 using Paella.Application.Persistence;
+using Paella.Application.UseCases.Update.Parameters;
 using Paella.Domain.Entities;
-using Paella.Domain.Exceptions;
 
 namespace Paella.Application.UseCases.Update
 {
@@ -14,16 +14,13 @@ namespace Paella.Application.UseCases.Update
             _repository = repository;
         }
 
-        public void Execute(Guid id, Product product)
+        public Guid Execute(UpdateInput input)
         {
-            var existingProduct = _repository.GetById(id);
+            var product = new Product(input.Id, input.Name, input.Description);
 
-            if (existingProduct == null)
-            {
-                throw new ProductNotFoundException();
-            }
+            _repository.Update(product);
 
-            _repository.Update(id, product);
+            return input.Id;
         }
     }
 }

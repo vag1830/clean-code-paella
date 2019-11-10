@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Paella.Application.Persistence;
 using Paella.Domain.Entities;
+using Paella.Domain.Exceptions;
 
 namespace Paella.Infrastructure
 {
@@ -34,9 +35,14 @@ namespace Paella.Infrastructure
             Products.Add(product.Id, product);
         }
 
-        public void Update(Guid id, Product product)
+        public void Update(Product product)
         {
-            Products[id] = product;
+            if (Products.ContainsKey(product.Id) == false)
+            {
+                throw new ProductNotFoundException();
+            }
+
+            Products[product.Id] = product;
         }
     }
 }

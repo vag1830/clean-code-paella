@@ -5,7 +5,7 @@ using Paella.Application.UseCases.Create.Parameters;
 using Paella.Application.UseCases.GetAll;
 using Paella.Application.UseCases.GetById;
 using Paella.Application.UseCases.Update;
-using Paella.Domain.Entities;
+using Paella.Application.UseCases.Update.Parameters;
 using Paella.Domain.Exceptions;
 using Paella.WebApi.UseCases.Create;
 using Paella.WebApi.UseCases.Update;
@@ -76,16 +76,21 @@ namespace Paella.WebApi.Controllers
         {
             try
             {
-                var product = new Product(id, request.Name, request.Description);
+                var input = new UpdateInput
+                {
+                    Id = id,
+                    Name = request.Name,
+                    Description = request.Description
+                };
 
-                _updateUseCase.Execute(id, product);
+                var productId = _updateUseCase.Execute(input);
+
+                return Ok(productId);
             }
             catch (ProductNotFoundException)
             {
                 return NotFound();
             }
-
-            return Ok();
         }
     }
 }

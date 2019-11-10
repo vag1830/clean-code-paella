@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Paella.Application.Persistence;
 using Paella.Domain.Entities;
+using Paella.Domain.Exceptions;
 using Paella.Infrastructure.Entities;
 
 namespace Paella.Infrastructure
@@ -46,11 +47,18 @@ namespace Paella.Infrastructure
             _context.SaveChanges();
         }
 
-        public void Update(Guid id, Product product)
+        public void Update(Product product)
         {
-            var dao = ToDao(product);
+            var dao = _context.Products
+                .FirstOrDefault(p => p.Id == product.Id);
 
-            _context.Update(dao);
+            if (dao == null)
+            {
+                throw new ProductNotFoundException();
+            }
+
+            dao.Name = product.Name;
+            dao.Description = product.Description;
 
             _context.SaveChanges();
         }

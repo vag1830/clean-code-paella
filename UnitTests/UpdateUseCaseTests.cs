@@ -5,7 +5,7 @@ using Paella.Application.UseCases.Create;
 using Paella.Application.UseCases.Create.Parameters;
 using Paella.Application.UseCases.GetById;
 using Paella.Application.UseCases.Update;
-using Paella.Domain.Entities;
+using Paella.Application.UseCases.Update.Parameters;
 using Paella.Domain.Exceptions;
 using Paella.Infrastructure;
 using Xunit;
@@ -22,10 +22,10 @@ namespace UnitTests
             var sut = new UpdateUseCase(repository);
 
             var id = Guid.NewGuid();
-            var product = new Product(id, "Name", "Description");
+            var updateInput = new UpdateInput { Id = id, Name = "Name", Description = "Description" };
 
             // Act
-            Action action = () => sut.Execute(id, product);
+            Action action = () => sut.Execute(updateInput);
 
             // Assert
             action
@@ -45,12 +45,12 @@ namespace UnitTests
 
             var id = Guid.NewGuid();
             var createInput = new CreateInput { Id = id, Name = "Name", Description = "Description" };
-            var product = new Product(id, "Name", "Description");
+            var UpdateInput = new UpdateInput { Id = id, Name = "Name", Description = "Description" };
 
             createUseCase.Execute(createInput);
 
             // Act
-            sut.Execute(id, product);
+            sut.Execute(UpdateInput);
 
             var actual = getByIdUseCase.Execute(id);
 

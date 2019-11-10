@@ -1,10 +1,10 @@
 ﻿using System;
-using Paella.Domain.Entities;
+using Paella.Application.UseCases.Update.Parameters;
 
 namespace Paella.Application.UseCases.Update
 {
     public interface IUpdateUseCase
     {
-        void Execute(Guid id, Product product);
+        Guid Execute(UpdateInput input);
     }
 }
