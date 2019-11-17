@@ -37,7 +37,7 @@ namespace Paella.WebApi.UseCases.Authentication
                     Expires = token.ValidTo
                 };
 
-                return Created("https://simpleEntity.com", response);
+                return Created("https://paella.com", response);
             }
             catch (System.Exception)
             {

@@ -23,6 +23,16 @@ namespace Paella.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy("All",
+                builder =>
+                {
+                    builder.AllowAnyOrigin();
+                });
+            });
+
             services.AddControllers();
             services.AddMemoryCache();
 
@@ -34,6 +44,7 @@ namespace Paella.WebApi
             services.AddScoped<TokenService, TokenService>();
 
             services.AddScoped<PaellaUserSeeder, PaellaUserSeeder>();
+            services.AddScoped<PaellaProductSeeder, PaellaProductSeeder>();
             services.AddSwagger();
         }
 
@@ -41,19 +52,19 @@ namespace Paella.WebApi
         public void Configure(
             IApplicationBuilder app,
             IWebHostEnvironment env,
-            PaellaUserSeeder userSeeder)
+            PaellaUserSeeder userSeeder,
+            PaellaProductSeeder productSeeder)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
-
+            //app.UseHttpsRedirection();
             app.UseCustomSwagger();
-
             app.UseRouting();
 
+            app.UseCors("All");
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -62,6 +73,7 @@ namespace Paella.WebApi
             });
 
             app.SeedUsers(userSeeder);
+            app.SeedProducts(productSeeder);
         }
     }
 }

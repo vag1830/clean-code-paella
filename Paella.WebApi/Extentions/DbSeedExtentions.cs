@@ -10,9 +10,9 @@ namespace Paella.WebApi.Extentions
             seeder.Seed();
         }
 
-        public static void SeedProducts(this IApplicationBuilder app)
+        public static void SeedProducts(this IApplicationBuilder app, PaellaProductSeeder seeder)
         {
-
+            seeder.Seed();
         }
     }
 }

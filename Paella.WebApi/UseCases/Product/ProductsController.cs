@@ -1,5 +1,4 @@
 ﻿using System;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Paella.Application.UseCases.Create;
 using Paella.Application.UseCases.Create.Parameters;
@@ -57,7 +56,7 @@ namespace Paella.WebApi.UseCases.Product
         }
 
         [HttpPost]
-        [Authorize]
+        // [Authorize]
         public IActionResult Create(CreateProductRequest request)
         {
             var input = new CreateInput
@@ -74,7 +73,7 @@ namespace Paella.WebApi.UseCases.Product
 
         [HttpPut]
         [Route("{id}")]
-        [Authorize]
+        // [Authorize]
         public IActionResult Update(Guid id, UpdateProductRequest request)
         {
             try

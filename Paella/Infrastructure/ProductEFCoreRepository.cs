@@ -5,6 +5,7 @@ using Paella.Application.Persistence;
 using Paella.Domain.Entities;
 using Paella.Domain.Exceptions;
 using Paella.Infrastructure.Entities;
+using Paella.Infrastructure.Exceptions;
 
 namespace Paella.Infrastructure
 {
@@ -49,18 +50,29 @@ namespace Paella.Infrastructure
 
         public void Update(Product product)
         {
-            var dao = _context.Products
-                .FirstOrDefault(p => p.Id == product.Id);
+            using var transaction = _context.Database.BeginTransaction();
 
-            if (dao == null)
+            try
             {
-                throw new ProductNotFoundException();
+                var dao = _context.Products
+                    .FirstOrDefault(p => p.Id == product.Id);
+
+                if (dao == null)
+                {
+                    throw new ProductNotFoundException();
+                }
+
+                dao.Name = product.Name;
+                dao.Description = product.Description;
+
+                _context.SaveChanges();
+
+                transaction.Commit();
             }
-
-            dao.Name = product.Name;
-            dao.Description = product.Description;
-
-            _context.SaveChanges();
+            catch (Exception ex)
+            {
+                throw new InfrastructureException(ex.Message, ex);
+            }
         }
 
         private Product ToDomainEntity(ProductDao dao)
