@@ -23,7 +23,6 @@ namespace Paella.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddCors(options =>
             {
                 options.AddPolicy("All",
@@ -33,8 +32,8 @@ namespace Paella.WebApi
                 });
             });
 
-            services.AddControllers();
-            services.AddMemoryCache();
+            services.AddControllers()
+                .AddNewtonsoftJson();
 
             services.AddUseCases();
             services.AddPersistence(Configuration);
@@ -60,16 +59,20 @@ namespace Paella.WebApi
                 app.UseDeveloperExceptionPage();
             }
 
-            //app.UseHttpsRedirection();
-            app.UseCustomSwagger();
             app.UseRouting();
-
             app.UseCors("All");
+
+            app.UseHttpsRedirection();
+
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCustomSwagger();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                // endpoints.MapHealthChecks("/health");
             });
 
             app.SeedUsers(userSeeder);

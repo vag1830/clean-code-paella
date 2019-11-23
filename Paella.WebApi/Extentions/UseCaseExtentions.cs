@@ -11,10 +11,10 @@ namespace Paella.WebApi.Extentions
     {
         public static void AddUseCases(this IServiceCollection services)
         {
-            services.AddTransient<IGetAllUseCase, GetAllUseCase>();
-            services.AddTransient<IGetByIdUseCase, GetByIdUseCase>();
-            services.AddTransient<ICreateUseCase, CreateUseCase>();
-            services.AddTransient<IUpdateUseCase, UpdateUseCase>();
+            services.AddScoped<IGetAllUseCase, GetAllUseCase>();
+            services.AddScoped<IGetByIdUseCase, GetByIdUseCase>();
+            services.AddScoped<ICreateUseCase, CreateUseCase>();
+            services.AddScoped<IUpdateUseCase, UpdateUseCase>();
             services.AddScoped<IAuthenticateUseCase, AuthenticateUseCase>();
         }
     }
