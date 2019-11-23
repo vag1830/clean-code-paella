@@ -1,11 +1,11 @@
 using System;
 using FluentAssertions;
 using Paella.Application.Persistence;
-using Paella.Application.UseCases.Create;
-using Paella.Application.UseCases.Create.Parameters;
-using Paella.Application.UseCases.GetById;
-using Paella.Application.UseCases.Update;
-using Paella.Application.UseCases.Update.Parameters;
+using Paella.Application.ProductUseCases.Create;
+using Paella.Application.ProductUseCases.Create.Parameters;
+using Paella.Application.ProductUseCases.GetById;
+using Paella.Application.ProductUseCases.Update;
+using Paella.Application.ProductUseCases.Update.Parameters;
 using Paella.Domain.Exceptions;
 using Paella.Infrastructure;
 using Xunit;

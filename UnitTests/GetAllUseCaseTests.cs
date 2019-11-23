@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using FluentAssertions;
 using Moq;
 using Paella.Application.Persistence;
-using Paella.Application.UseCases.GetAll;
+using Paella.Application.ProductUseCases.GetAll;
 using Paella.Domain.Entities;
 using Xunit;
 

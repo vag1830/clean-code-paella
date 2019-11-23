@@ -1,11 +1,11 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
-using Paella.Application.UseCases.Create;
-using Paella.Application.UseCases.Create.Parameters;
-using Paella.Application.UseCases.GetAll;
-using Paella.Application.UseCases.GetById;
+using Paella.Application.ProductUseCases.Create;
+using Paella.Application.ProductUseCases.Create.Parameters;
+using Paella.Application.ProductUseCases.GetAll;
+using Paella.Application.ProductUseCases.GetById;
+using Paella.Application.ProductUseCases.Update.Parameters;
 using Paella.Application.UseCases.Update;
-using Paella.Application.UseCases.Update.Parameters;
 using Paella.Domain.Exceptions;
 using Paella.WebApi.UseCases.Product.Create;
 using Paella.WebApi.UseCases.Product.Update;

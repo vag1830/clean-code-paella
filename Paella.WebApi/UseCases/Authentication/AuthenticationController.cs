@@ -1,5 +1,6 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Mvc;
+using Paella.Application.AuthenticattionUseCases.Parameters;
 using Paella.Application.UseCases.Authenticate;
 using Paella.WebApi.UseCases.Authentication.Create;
 using WebApi.Services;

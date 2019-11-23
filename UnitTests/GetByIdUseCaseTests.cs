@@ -2,7 +2,7 @@ using System;
 using FluentAssertions;
 using Moq;
 using Paella.Application.Persistence;
-using Paella.Application.UseCases.GetById;
+using Paella.Application.ProductUseCases.GetById;
 using Paella.Domain.Entities;
 using Xunit;
 
