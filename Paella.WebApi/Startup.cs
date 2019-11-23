@@ -35,6 +35,8 @@ namespace Paella.WebApi
             services.AddControllers()
                 .AddNewtonsoftJson();
 
+            services.AddHealthChecks();
+
             services.AddUseCases();
             services.AddPersistence(Configuration);
             services.AddIdentityAndAuthentication();
@@ -72,7 +74,7 @@ namespace Paella.WebApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                // endpoints.MapHealthChecks("/health");
+                endpoints.MapHealthChecks("/api/health");
             });
 
             app.SeedUsers(userSeeder);
