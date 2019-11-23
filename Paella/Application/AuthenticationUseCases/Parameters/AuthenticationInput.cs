@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Paella.Application.AuthenticattionUseCases.Parameters
+namespace Paella.Application.AuthenticationUseCases.Parameters
 {
     public class AuthenticationInput
     {

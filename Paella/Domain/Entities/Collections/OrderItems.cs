@@ -15,5 +15,7 @@ namespace Paella.Domain.Entities.Collections
         {
             Items = items;
         }
+
+        public int Count => Items.Count;
     }
 }

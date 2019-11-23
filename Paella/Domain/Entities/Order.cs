@@ -7,17 +7,25 @@ namespace Paella.Domain.Entities
     {
         public Guid Id { get; set; }
 
-        public PaellaUser User { get; }
+        public Guid CustomerId { get; }
 
         public OrderItems Items { get; }
 
         public DateTime CreatedDate { get; }
 
-        public Order(PaellaUser user, OrderItems items, DateTime createdDate)
+        public Order(Guid customerId, OrderItems items)
         {
-            User = user;
+            if (items == null || items.Count < 1)
+            {
+                throw new ArgumentException($"{typeof(OrderItems)} cannot be null or empty.");
+            }
+
+            Id = Guid.NewGuid();
+
+            CustomerId = customerId;
             Items = items;
-            CreatedDate = createdDate;
+
+            CreatedDate = DateTime.UtcNow;
         }
     }
 }

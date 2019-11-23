@@ -1,9 +1,9 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Paella.Application.AuthenticationUseCases;
 using Paella.Application.ProductUseCases.Create;
 using Paella.Application.ProductUseCases.GetAll;
 using Paella.Application.ProductUseCases.GetById;
 using Paella.Application.ProductUseCases.Update;
-using Paella.Application.UseCases.Authenticate;
 using Paella.Application.UseCases.Update;
 
 namespace Paella.WebApi.Extentions
