@@ -1,18 +1,28 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.DependencyInjection;
 using Paella.Infrastructure.Seeds;
 
 namespace Paella.WebApi.Extentions
 {
     public static class DbSeedExtentions
     {
-        public static void SeedUsers(this IApplicationBuilder app, PaellaUserSeeder seeder)
+        public static void AddDatabaseSeeders(this IServiceCollection services)
         {
-            seeder.Seed();
+            services.AddScoped<ISeeder, PaellaUserSeeder>();
+            services.AddScoped<ISeeder, PaellaProductSeeder>();
         }
 
-        public static void SeedProducts(this IApplicationBuilder app, PaellaProductSeeder seeder)
+        public static void SeedDatabase(this IApplicationBuilder app, IServiceProvider serviceProvider)
         {
-            seeder.Seed();
+            using var scope = serviceProvider.CreateScope();
+
+            var seeders = serviceProvider.GetServices<ISeeder>();
+
+            foreach (var seeder in seeders)
+            {
+                seeder.Seed();
+            }
         }
     }
 }

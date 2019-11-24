@@ -4,7 +4,7 @@ using Paella.Infrastructure.Entities;
 
 namespace Paella.Infrastructure.Seeds
 {
-    public class PaellaProductSeeder
+    public class PaellaProductSeeder : ISeeder
     {
         private readonly PaellaDbContext _context;
 

@@ -1,10 +1,10 @@
+using System;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Paella.Application.Services;
-using Paella.Infrastructure.Seeds;
 using Paella.Infrastructure.Services;
 using Paella.WebApi.Extentions;
 using WebApi.Services;
@@ -44,8 +44,7 @@ namespace Paella.WebApi
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<TokenService, TokenService>();
 
-            services.AddScoped<PaellaUserSeeder, PaellaUserSeeder>();
-            services.AddScoped<PaellaProductSeeder, PaellaProductSeeder>();
+            services.AddDatabaseSeeders();
             services.AddSwagger();
         }
 
@@ -53,8 +52,7 @@ namespace Paella.WebApi
         public void Configure(
             IApplicationBuilder app,
             IWebHostEnvironment env,
-            PaellaUserSeeder userSeeder,
-            PaellaProductSeeder productSeeder)
+            IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -77,8 +75,7 @@ namespace Paella.WebApi
                 endpoints.MapHealthChecks("/api/health");
             });
 
-            app.SeedUsers(userSeeder);
-            app.SeedProducts(productSeeder);
+            app.SeedDatabase(serviceProvider);
         }
     }
 }

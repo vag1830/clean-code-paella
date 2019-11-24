@@ -5,7 +5,7 @@ using Paella.Domain.Entities;
 
 namespace Paella.Infrastructure.Seeds
 {
-    public class PaellaUserSeeder
+    public class PaellaUserSeeder : ISeeder
     {
         private readonly PaellaDbContext _context;
         private readonly UserManager<PaellaUser> _userManager;
