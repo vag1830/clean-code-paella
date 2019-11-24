@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Paella.Domain.Entities;
 using Paella.Infrastructure.Entities;
 
 namespace Paella.Infrastructure
@@ -45,6 +44,11 @@ namespace Paella.Infrastructure
             {
                 entity.HasKey(customer => customer.Id);
                 entity.HasMany(customer => customer.Orders);
+            });
+
+            modelBuilder.Entity<PaellaUser>(entity =>
+            {
+                entity.HasOne(user => user.Customer);
             });
         }
     }

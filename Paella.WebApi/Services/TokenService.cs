@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
-using Paella.Domain.Entities;
+using Paella.Infrastructure.Entities;
 
 namespace WebApi.Services
 {

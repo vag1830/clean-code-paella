@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Identity;
 using Paella.Application.Services;
-using Paella.Domain.Entities;
+using Paella.Infrastructure.Entities;
 
 namespace Paella.Infrastructure.Services
 {

@@ -9,8 +9,9 @@ namespace Paella.WebApi.Extentions
     {
         public static void AddDatabaseSeeders(this IServiceCollection services)
         {
-            services.AddScoped<ISeeder, PaellaUserSeeder>();
-            services.AddScoped<ISeeder, PaellaProductSeeder>();
+            services.AddScoped<ISeeder, UserSeeder>();
+            services.AddScoped<ISeeder, ProductSeeder>();
+            services.AddScoped<ISeeder, CustomerSeeder>();
         }
 
         public static void SeedDatabase(this IApplicationBuilder app, IServiceProvider serviceProvider)

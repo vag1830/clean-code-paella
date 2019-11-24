@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Paella.Domain.Entities;
 using Paella.Infrastructure;
+using Paella.Infrastructure.Entities;
 
 namespace Paella.WebApi.Extentions
 {

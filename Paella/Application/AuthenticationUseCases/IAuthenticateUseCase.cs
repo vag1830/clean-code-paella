@@ -1,5 +1,5 @@
 ﻿using Paella.Application.AuthenticationUseCases.Parameters;
-using Paella.Domain.Entities;
+using Paella.Infrastructure.Entities;
 
 namespace Paella.Application.AuthenticationUseCases
 {

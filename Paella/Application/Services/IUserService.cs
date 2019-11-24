@@ -1,4 +1,4 @@
-﻿using Paella.Domain.Entities;
+﻿using Paella.Infrastructure.Entities;
 
 namespace Paella.Application.Services
 {
