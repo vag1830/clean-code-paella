@@ -1,14 +1,16 @@
-﻿namespace Paella.Domain.Entities
+﻿using System;
+
+namespace Paella.Domain.Entities
 {
     public class OrderItem
     {
         public int Quantity { get; }
 
-        public Product Product { get; }
+        public Guid ProductId { get; }
 
-        public OrderItem(Product product, int quantity)
+        public OrderItem(Guid productId, int quantity)
         {
-            Product = product;
+            ProductId = productId;
             Quantity = quantity;
         }
     }

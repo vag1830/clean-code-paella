@@ -44,5 +44,10 @@ namespace Paella.Infrastructure
 
             Products[product.Id] = product;
         }
+
+        public bool Exists(Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

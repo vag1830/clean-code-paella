@@ -169,6 +169,11 @@ namespace Paella.Infrastructure
             }
         }
 
+        public bool Exists(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         private void AddParametersToCommand(SqlCommand command, Product product)
         {
             var id = new SqlParameter("@id", product.Id);
@@ -183,16 +188,6 @@ namespace Paella.Infrastructure
         private Product ToDomainEntity(ProductDao dao)
         {
             return new Product(dao.Id, dao.Name, dao.Description);
-        }
-
-        private ProductDao ToDao(Product product)
-        {
-            return new ProductDao
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Description = product.Description
-            };
         }
     }
 }

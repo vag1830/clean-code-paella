@@ -34,7 +34,7 @@ namespace UnitTests.ProductTests
         }
 
         [Fact]
-        public void TheProductExists_ShouldUpdateTheProduct()
+        public void ProductExists_ShouldUpdateTheProduct()
         {
             // Arrange
             var repository = GetEmptyProductRepository();

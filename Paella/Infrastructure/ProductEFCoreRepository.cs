@@ -75,6 +75,11 @@ namespace Paella.Infrastructure
             }
         }
 
+        public bool Exists(Guid id)
+        {
+            return _context.Products.Any(product => product.Id == id);
+        }
+
         private Product ToDomainEntity(ProductDao dao)
         {
             return new Product(dao.Id, dao.Name, dao.Description);
@@ -89,5 +94,7 @@ namespace Paella.Infrastructure
                 Description = product.Description
             };
         }
+
+
     }
 }

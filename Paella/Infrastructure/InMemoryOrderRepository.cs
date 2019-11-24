@@ -33,7 +33,7 @@ namespace Paella.Infrastructure
         {
             var customer = new Customer();
             var product = new Product("name", "description");
-            var orderItem = new OrderItem(product, 1);
+            var orderItem = new OrderItem(product.Id, 1);
             var orderItems = new List<OrderItem> { orderItem };
             var items = new OrderItems(orderItems);
 

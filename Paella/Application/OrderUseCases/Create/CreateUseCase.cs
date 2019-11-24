@@ -1,26 +1,33 @@
 ﻿using System;
+using System.Collections.Generic;
 using Paella.Application.OrderUseCases.Create.Parameters;
 using Paella.Application.Persistence;
 using Paella.Domain.Entities;
+using Paella.Domain.Entities.Collections;
+using Paella.Domain.Exceptions;
 
 namespace Paella.Application.OrderUseCases.Create
 {
     public class CreateUseCase : ICreateUseCase
     {
         private readonly IOrderRepository _repository;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly IProductRepository _productRepository;
 
-        public CreateUseCase(IOrderRepository repository)
+        public CreateUseCase(
+            IOrderRepository repository,
+            ICustomerRepository customerRepository,
+            IProductRepository productRepository)
         {
             _repository = repository;
+            _customerRepository = customerRepository;
+            _productRepository = productRepository;
         }
 
         public Guid Execute(CreateInput input)
         {
-            // NOTES: Creates a new Order
-            // - An order must come from a customer
-            // - An order must contain at least one Item
-            // - Each item on the order is a tuple of (Product, Qty)
-            // - Each item on the order must have availability for the requested Qty
+            ValidateCustomerIdAndThrow(input.CustomerId);
+            ValidateOrderItemsAndThrow(input.ProductIdQuantityDictionary);
 
             var order = ToDomainEntity(input);
 
@@ -29,9 +36,37 @@ namespace Paella.Application.OrderUseCases.Create
             return order.Id;
         }
 
+        private void ValidateCustomerIdAndThrow(Guid customerId)
+        {
+            var customer = _customerRepository.GetById(customerId);
+
+            if (customer == null)
+            {
+                throw new CustomerNotFoundException($"{typeof(CreateUseCase)}: Customer with id: {customerId}, does not exist.");
+            }
+        }
+
+        private void ValidateOrderItemsAndThrow(IDictionary<Guid, int> productIdQuantityDictionary)
+        {
+            foreach (var item in productIdQuantityDictionary)
+            {
+                if (_productRepository.Exists(item.Key) == false)
+                {
+                    throw new ProductNotFoundException($"{typeof(CreateUseCase)}: Product with id: {item.Key}, does not exist.");
+                }
+            }
+        }
+
         private Order ToDomainEntity(CreateInput input)
         {
-            var order = new Order(input.CustomerId, null);
+            var orderItems = new OrderItems();
+
+            foreach (var item in input.ProductIdQuantityDictionary)
+            {
+                orderItems.Add(item.Key, item.Value);
+            }
+
+            var order = new Order(input.CustomerId, orderItems);
 
             return order;
         }

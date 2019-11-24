@@ -32,7 +32,7 @@ namespace UnitTests.ProductTests
         }
 
         [Fact]
-        public void NewProduct_ShouldAddTheProduct()
+        public void ValidInput_ShouldCreateTheProduct()
         {
             // Arrange
             var repository = new InMemoryProductRepository();

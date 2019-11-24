@@ -10,7 +10,7 @@ namespace UnitTests.OrderTests
     public class GetByIdUseCaseTests
     {
         [Fact]
-        public void TheOrderDoesNotExist_ShouldReturNull()
+        public void OrderDoesNotExist_ShouldReturnNull()
         {
             // Arrange
             var repository = GetEmptyOrderRepository();
@@ -28,7 +28,7 @@ namespace UnitTests.OrderTests
         }
 
         [Fact]
-        public void TheOrderExists_ShouldReturTheExpectedOrder()
+        public void OrderExists_ShouldReturTheExpectedOrder()
         {
             // Arrange
             var repository = GetOrderRepository();

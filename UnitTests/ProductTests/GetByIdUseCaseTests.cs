@@ -29,7 +29,7 @@ namespace UnitTests.ProductTests
         }
 
         [Fact]
-        public void ProductsAvailable_ShouldReturnAListOfProducts()
+        public void ProductExists_ShouldReturnTheExpectedProduct()
         {
             // Arrange
             var repository = GetProductRepository();

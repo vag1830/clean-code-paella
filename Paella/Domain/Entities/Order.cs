@@ -5,7 +5,7 @@ namespace Paella.Domain.Entities
 {
     public class Order
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; }
 
         public Guid CustomerId { get; }
 
@@ -15,11 +15,6 @@ namespace Paella.Domain.Entities
 
         public Order(Guid customerId, OrderItems items)
         {
-            if (items == null || items.Count < 1)
-            {
-                throw new ArgumentException($"{typeof(OrderItems)} cannot be null or empty.");
-            }
-
             Id = Guid.NewGuid();
 
             CustomerId = customerId;

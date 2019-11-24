@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Paella.Domain.Entities.Collections
 {
@@ -17,5 +18,10 @@ namespace Paella.Domain.Entities.Collections
         }
 
         public int Count => Items.Count;
+
+        public void Add(Guid productId, int quantity)
+        {
+            Items.Add(new OrderItem(productId, quantity));
+        }
     }
 }
