@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Paella.Infrastructure.Entities
 {
@@ -6,8 +7,10 @@ namespace Paella.Infrastructure.Entities
     {
         public Guid Id { get; set; }
 
-        public Guid CustomerId { get; set; }
+        public DateTime CreatedDate { get; set; }
 
+        public CustomerDao Customer { get; set; }
 
+        public ICollection<OrderItemDao> Items { get; set; }
     }
 }

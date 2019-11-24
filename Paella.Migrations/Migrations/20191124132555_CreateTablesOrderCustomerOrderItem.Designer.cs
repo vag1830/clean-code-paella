@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Paella.Infrastructure;
 
 namespace Paella.Migrations.Migrations
 {
     [DbContext(typeof(PaellaDbContext))]
-    partial class PaellaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191124132555_CreateTablesOrderCustomerOrderItem")]
+    partial class CreateTablesOrderCustomerOrderItem
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
