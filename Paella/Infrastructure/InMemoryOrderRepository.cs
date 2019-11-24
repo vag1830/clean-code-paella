@@ -11,13 +11,6 @@ namespace Paella.Infrastructure
     {
         private readonly IDictionary<Guid, Order> Orders = new Dictionary<Guid, Order>();
 
-        public InMemoryOrderRepository()
-        {
-            //var order = CreateOrder();
-
-            //Orders.Add(order.Id, order);
-        }
-
         public IList<Order> GetAll()
         {
             return Orders.Values
@@ -29,6 +22,11 @@ namespace Paella.Infrastructure
             Orders.TryGetValue(id, out var order);
 
             return order;
+        }
+
+        public void Create(Order order)
+        {
+            Orders.Add(order.Id, order);
         }
 
         public Order CreateAndAddNewOrder()
@@ -45,5 +43,7 @@ namespace Paella.Infrastructure
 
             return order;
         }
+
+
     }
 }

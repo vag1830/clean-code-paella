@@ -9,6 +9,12 @@ namespace Paella.Infrastructure
     {
         public DbSet<ProductDao> Products { get; set; }
 
+        //public DbSet<OrderDao> Orders { get; set; }
+
+        //public DbSet<OrderItemDao> OrderItems { get; set; }
+
+        //public DbSet<CustomerDao> Customers { get; set; }
+
         public PaellaDbContext(DbContextOptions<PaellaDbContext> options)
             : base(options) { }
 
@@ -20,6 +26,15 @@ namespace Paella.Infrastructure
             {
                 entity.HasKey(product => product.Id);
             });
+
+
+            //modelBuilder.Entity<OrderItemDao>(orderItem => { 
+            //    orderItem.ha
+
+            //    })
+            //    .HasOne<ProductDao>();
+
+
         }
     }
 }
