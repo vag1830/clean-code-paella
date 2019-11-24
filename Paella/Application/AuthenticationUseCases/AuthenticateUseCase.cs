@@ -7,7 +7,7 @@ namespace Paella.Application.AuthenticationUseCases
 {
     public class AuthenticateUseCase : IAuthenticateUseCase
     {
-        private IUserService _userService;
+        private readonly IUserService _userService;
 
         public AuthenticateUseCase(IUserService userService)
         {

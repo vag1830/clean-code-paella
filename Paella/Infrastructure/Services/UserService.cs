@@ -7,7 +7,7 @@ namespace Paella.Infrastructure.Services
 {
     public class UserService : IUserService
     {
-        private UserManager<PaellaUser> _userManager;
+        private readonly UserManager<PaellaUser> _userManager;
 
         public UserService(UserManager<PaellaUser> userManager)
         {
