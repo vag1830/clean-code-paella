@@ -10,5 +10,10 @@ namespace Paella.Domain.Entities
         {
             Id = Guid.NewGuid();
         }
+
+        public Customer(Guid id)
+        {
+            Id = id;
+        }
     }
 }

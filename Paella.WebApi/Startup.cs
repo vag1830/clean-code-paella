@@ -4,9 +4,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Paella.Application.Services;
-using Paella.Infrastructure.Services;
 using Paella.WebApi.Extentions;
+using Paella.WebApi.Services;
 using WebApi.Services;
 
 namespace Paella.WebApi

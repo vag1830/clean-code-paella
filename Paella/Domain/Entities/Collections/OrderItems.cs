@@ -5,23 +5,25 @@ namespace Paella.Domain.Entities.Collections
 {
     public class OrderItems
     {
-        ICollection<OrderItem> Items { get; }
+        private ICollection<OrderItem> _items;
+
+        public IReadOnlyCollection<OrderItem> All => new List<OrderItem>(_items);
 
         public OrderItems()
         {
-            Items = new List<OrderItem>();
+            _items = new List<OrderItem>();
         }
 
         public OrderItems(ICollection<OrderItem> items)
         {
-            Items = items;
+            _items = items;
         }
 
-        public int Count => Items.Count;
+        public int Count => _items.Count;
 
         public void Add(Guid productId, int quantity)
         {
-            Items.Add(new OrderItem(productId, quantity));
+            _items.Add(new OrderItem(productId, quantity));
         }
     }
 }

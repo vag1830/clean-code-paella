@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -13,6 +14,8 @@ namespace Paella.WebApi.Extentions
     {
         public static IServiceCollection AddIdentityAndAuthentication(this IServiceCollection services)
         {
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             services.AddIdentity<PaellaUser, IdentityRole>()
                 .AddEntityFrameworkStores<PaellaDbContext>()
                 .AddDefaultTokenProviders();

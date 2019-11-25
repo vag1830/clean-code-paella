@@ -20,6 +20,8 @@ namespace Paella.WebApi.Extentions
 
             //services.AddSingleton<IProductRepository, InMemoryProductRepository>();
             services.AddTransient<IProductRepository, ProductEFCoreRepository>();
+            services.AddTransient<IOrderRepository, OrderEFCoreRepository>();
+            services.AddTransient<ICustomerRepository, CustomerEFCoreRepository>();
             //services.AddTransient<IProductRepository, ProductAdoRepository>(serviceProvider => new ProductAdoRepository(connectionString));
         }
     }
